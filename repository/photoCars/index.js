@@ -12,3 +12,31 @@ exports.getPhotos = async () => {
   });
   return data;
 };
+
+exports.getPhoto = async (id) => {
+  const key = `cars:${id}`;
+
+  // get from redis
+  let data = await getData(key);
+  if (data) {
+    return data;
+  }
+
+  // get from db
+  data = await photoCars.findAll({
+    where: {
+      id,
+    },
+    include: {
+      model: cars,
+    },
+  });
+  if (data.length > 0) {
+    // save to redis
+    await setData(key, data[0], 300);
+
+    return data[0];
+  }
+
+  throw new Error(`Photo is not found!`);
+};
