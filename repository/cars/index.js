@@ -10,3 +10,42 @@ exports.getCars = async () => {
   });
   return data;
 };
+
+exports.getCar = async (id) => {
+  const key = `cars:${id}`;
+
+  // check redis and if there are any data return data from redis
+  let data = await getData(key);
+  if (data) {
+    return data;
+  }
+
+  // if in the redis not found, we will get from database (postgres) and then save it to redis
+  data = await cars.findAll({
+    where: {
+      id,
+    },
+    include: {
+      model: photoCars,
+    },
+  });
+  if (data.length > 0) {
+    // save in the redis if in the postgres is found
+    await setData(key, data[0], 300);
+
+    return data[0];
+  }
+
+  throw new Error(`Cars is not found!`);
+};
+
+exports.createCars = async (payload) => {
+  // Create data to postgres
+  const data = await cars.create(payload);
+
+  // Save to redis (cache)
+  const key = `cars:${data.id}`;
+  await setData(key, data, 300);
+
+  return data;
+};
