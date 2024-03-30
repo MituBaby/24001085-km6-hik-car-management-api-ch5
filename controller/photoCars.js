@@ -57,3 +57,25 @@ exports.createPhoto = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.updatePhoto = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { cars_id } = req.body;
+    if (!cars_id || cars_id <= 0) {
+      return next({
+        message: "Cars ID be provided!",
+        statusCode: 400,
+      });
+    }
+
+    const data = await photoUsecase.updatePhoto(id, { cars_id });
+
+    res.status(200).json({
+      message: "Successs",
+      data,
+    });
+  } catch (error) {
+    next(error);
+  }
+};

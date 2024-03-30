@@ -14,3 +14,13 @@ exports.createPhoto = async (payload) => {
   const data = await photoRepo.createPhoto(payload);
   return data;
 };
+
+exports.updatePhoto = async (id, payload) => {
+  // update old data
+  await photoRepo.updatePhoto(id, payload);
+
+  // find the new data
+  const data = await photoRepo.getPhoto(id);
+
+  return data;
+};

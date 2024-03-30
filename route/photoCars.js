@@ -8,5 +8,8 @@ router
   .get(photoController.getPhotos)
   .post(photoController.createPhoto);
 
-router.route("/:id").get(photoController.getPhoto);
+router
+  .route("/:id")
+  .get(photoController.getPhoto)
+  .put(photoController.updatePhoto);
 module.exports = router;
