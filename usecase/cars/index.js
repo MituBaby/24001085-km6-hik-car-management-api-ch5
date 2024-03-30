@@ -16,10 +16,8 @@ exports.createCars = async (payload) => {
 };
 
 exports.updateCars = async (id, payload) => {
-  // update old data
   await carsRepo.updateCars(id, payload);
 
-  // find the new data
   const data = await carsRepo.getCar(id);
 
   return data;

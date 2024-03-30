@@ -16,10 +16,8 @@ exports.createPhoto = async (payload) => {
 };
 
 exports.updatePhoto = async (id, payload) => {
-  // update old data
   await photoRepo.updatePhoto(id, payload);
 
-  // find the new data
   const data = await photoRepo.getPhoto(id);
 
   return data;

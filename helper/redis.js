@@ -5,7 +5,7 @@ exports.getData = async (key) => {
   try {
     let dataString = await redisClient.get(key);
     if (dataString) {
-      data = JSON.parse(dataString); // need to be parsed because data in redis is string, so we will convert from string to js object/array
+      data = JSON.parse(dataString);
       return data;
     }
   } finally {

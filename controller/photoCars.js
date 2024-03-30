@@ -36,7 +36,7 @@ exports.getPhoto = async (req, res, next) => {
 exports.createPhoto = async (req, res, next) => {
   try {
     const { cars_id } = req.body;
-    const { photo } = req.files; // get photo file
+    const { photo } = req.files;
     if (!cars_id || cars_id <= 0) {
       return next({
         message: "Cars ID must be provided!",
