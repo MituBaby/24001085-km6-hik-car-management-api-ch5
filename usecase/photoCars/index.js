@@ -24,3 +24,8 @@ exports.updatePhoto = async (id, payload) => {
 
   return data;
 };
+
+exports.deletePhoto = async (id) => {
+  const data = await photoRepo.deletePhoto(id);
+  return data;
+};

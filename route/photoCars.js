@@ -11,5 +11,6 @@ router
 router
   .route("/:id")
   .get(photoController.getPhoto)
-  .put(photoController.updatePhoto);
+  .put(photoController.updatePhoto)
+  .delete(photoController.deletePhoto);
 module.exports = router;

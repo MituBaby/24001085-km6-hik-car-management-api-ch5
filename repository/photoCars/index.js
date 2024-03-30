@@ -110,3 +110,15 @@ exports.updatePhoto = async (id, payload) => {
 
   return data;
 };
+
+exports.deletePhoto = async (id) => {
+  const key = `photo:${id}`;
+
+  // delete from postgres
+  await photoCars.destroy({ where: { id } });
+
+  // delete from redis
+  await deleteData(key);
+
+  return null;
+};
