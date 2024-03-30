@@ -14,3 +14,18 @@ exports.createCars = async (payload) => {
   const data = await carsRepo.createCars(payload);
   return data;
 };
+
+exports.updateCars = async (id, payload) => {
+  // update old data
+  await carsRepo.updateCars(id, payload);
+
+  // find the new data
+  const data = await carsRepo.getCar(id);
+
+  return data;
+};
+
+exports.deleteCars = async (id) => {
+  const data = await carsRepo.deleteCars(id);
+  return data;
+};

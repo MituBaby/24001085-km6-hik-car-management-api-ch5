@@ -49,3 +49,44 @@ exports.createCars = async (payload) => {
 
   return data;
 };
+
+exports.updateCars = async (id, payload) => {
+  const key = `cars:${id}`;
+
+  // update data to postgres
+  await cars.update(payload, {
+    where: {
+      id,
+    },
+  });
+
+  // get data from postgres
+  const data = await cars.findAll({
+    where: {
+      id,
+    },
+    include: {
+      model: photoCars,
+    },
+  });
+  if (data.length > 0) {
+    // save to redis (cache)
+    await setData(key, data[0], 300);
+
+    return data[0];
+  }
+
+  throw new Error(`Cars is not found!`);
+};
+
+exports.deleteCars = async (id) => {
+  const key = `cars:${id}`;
+
+  // delete from postgres
+  await cars.destroy({ where: { id } });
+
+  // delete from redis
+  await deleteData(key);
+
+  return null;
+};

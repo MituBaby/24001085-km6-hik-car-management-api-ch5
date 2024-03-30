@@ -62,3 +62,45 @@ exports.createCars = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.updateCars = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { name, rentPerDay } = req.body;
+    if (!name || name == "") {
+      return next({
+        message: "Name must be provided!",
+        statusCode: 400,
+      });
+    }
+    if (!rentPerDay || rentPerDay < 1000000) {
+      return next({
+        message: "Cost rent must be provided!",
+        statusCode: 400,
+      });
+    }
+
+    const data = await carsUsecase.updateCars(id, { name, rentPerDay });
+
+    res.status(200).json({
+      message: "Successs",
+      data,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.deleteCars = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const data = await carsUsecase.deleteCars(id);
+
+    res.status(200).json({
+      message: "Successs",
+      data,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
