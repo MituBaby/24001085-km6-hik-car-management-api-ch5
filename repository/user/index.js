@@ -6,28 +6,33 @@ const { uploader } = require("../../helper/cloudinary");
 const { getData, setData } = require("../../helper/redis");
 
 exports.createUser = async (payload) => {
-    payload.password = bcrypt.hashSync(payload.password, 10);
+    try {
+        payload.password = bcrypt.hashSync(payload.password, 10);
 
-    if (payload.photo) {
-        const { photo } = payload;
+        if (payload.photo) {
+            const { photo } = payload;
 
-        photo.publicId = crypto.randomBytes(16).toString("hex");
+            photo.publicId = crypto.randomBytes(16).toString("hex");
 
-        photo.name = `${photo.publicId}${path.parse(photo.name).ext}`;
+            photo.name = `${photo.publicId}${path.parse(photo.name).ext}`;
 
-        const imageUpload = await uploader(photo);
-        payload.photo = imageUpload.secure_url;
+            const imageUpload = await uploader(photo);
+            payload.photo = imageUpload.secure_url;
+        }
+
+        const data = await user.create(payload);
+
+        const keyID = `user:${data.id}`;
+        await setData(keyID, data, 300);
+
+        const keyEmail = `user:${data.email}`;
+        await setData(keyEmail, data, 300);
+
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw new Error("User with that email already exists!");
     }
-
-    const data = await user.create(payload);
-
-    const keyID = `user:${data.id}`;
-    await setData(keyID, data, 300);
-
-    const keyEmail = `user:${data.email}`;
-    await setData(keyEmail, data, 300);
-
-    return data;
 };
 
 exports.getUserByID = async (id) => {
