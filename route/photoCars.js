@@ -7,11 +7,11 @@ const {authMiddleware} = require("../middleware/auth");
 router
   .route("/")
   .get(authMiddleware(["user", "admin"]), photoController.getPhotos)
-  .post(authMiddleware(["admin"]), photoController.createPhoto);
+  .post(authMiddleware(["user", "admin"]), photoController.createPhoto);
 
 router
   .route("/:id")
   .get(authMiddleware(["user", "admin"]), photoController.getPhoto)
-  .put(authMiddleware(["admin"]), photoController.updatePhoto)
+  .put(authMiddleware(["user", "admin"]), photoController.updatePhoto)
   .delete(authMiddleware(["admin"]), photoController.deletePhoto);
 module.exports = router;
