@@ -2,7 +2,7 @@ const { register, login, profile } = require("../usecase/auth");
 
 exports.register = async (req, res, next) => {
     try {
-        const { email, password, name } = req?.body;
+        const { email, password, name, role } = req?.body;
 
         const photo = req?.files?.photo;
 
@@ -30,6 +30,7 @@ exports.register = async (req, res, next) => {
             password,
             name,
             photo,
+            role
         });
 
         res.status(200).json({
