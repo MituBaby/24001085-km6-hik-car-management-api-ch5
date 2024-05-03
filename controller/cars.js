@@ -52,6 +52,10 @@ exports.createCars = async (req, res, next) => {
     const data = await carsUsecase.createCars({
       name,
       rentPerDay,
+      manufacture,
+      type,
+      transmission,
+      description,
     });
 
     res.status(201).json({
@@ -80,7 +84,14 @@ exports.updateCars = async (req, res, next) => {
       });
     }
 
-    const data = await carsUsecase.updateCars(id, { name, rentPerDay });
+    const data = await carsUsecase.updateCars(id, { 
+      name,
+      rentPerDay,
+      manufacture,
+      type,
+      transmission,
+      description, 
+    });
 
     res.status(200).json({
       message: "Successs",
