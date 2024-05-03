@@ -35,7 +35,14 @@ exports.getCar = async (req, res, next) => {
 
 exports.createCars = async (req, res, next) => {
   try {
-    const { name, rentPerDay } = req.body;
+    const { 
+      name,
+      rentPerDay,
+      manufacture,
+      type,
+      transmission,
+      description,
+     } = req.body;
     if (!name || name == "") {
       return next({
         message: "Name must be provided!",
@@ -45,6 +52,30 @@ exports.createCars = async (req, res, next) => {
     if (!rentPerDay || rentPerDay < 1000000) {
       return next({
         message: "Cost rent must be provided!",
+        statusCode: 400,
+      });
+    }
+    if (!manufacture || manufacture == "") {
+      return next({
+        message: "Manufacture must be provided!",
+        statusCode: 400,
+      });
+    }
+    if (!type || type == "") {
+      return next({
+        message: "Type must be provided!",
+        statusCode: 400,
+      });
+    }
+    if (!transmission || transmission == "") {
+      return next({
+        message: "Transmission must be provided!",
+        statusCode: 400,
+      });
+    }
+    if (!description || description == "") {
+      return next({
+        message: "Description must be provided!",
         statusCode: 400,
       });
     }
@@ -70,7 +101,14 @@ exports.createCars = async (req, res, next) => {
 exports.updateCars = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { name, rentPerDay } = req.body;
+    const { 
+      name,
+      rentPerDay,
+      manufacture,
+      type,
+      transmission,
+      description,
+     } = req.body;
     if (!name || name == "") {
       return next({
         message: "Name must be provided!",
@@ -80,6 +118,30 @@ exports.updateCars = async (req, res, next) => {
     if (!rentPerDay || rentPerDay < 1000000) {
       return next({
         message: "Cost rent must be provided!",
+        statusCode: 400,
+      });
+    }
+    if (!manufacture || manufacture == "") {
+      return next({
+        message: "Manufacture must be provided!",
+        statusCode: 400,
+      });
+    }
+    if (!type || type == "") {
+      return next({
+        message: "Type must be provided!",
+        statusCode: 400,
+      });
+    }
+    if (!transmission || transmission == "") {
+      return next({
+        message: "Transmission must be provided!",
+        statusCode: 400,
+      });
+    }
+    if (!description || description == "") {
+      return next({
+        message: "Description must be provided!",
         statusCode: 400,
       });
     }
