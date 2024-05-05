@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       transmission:DataTypes.STRING,
       description:DataTypes.STRING,
-      // photo: DataTypes.TEXT,
+      photo: DataTypes.TEXT,
       deletedAt: DataTypes.DATE,
     },
     {

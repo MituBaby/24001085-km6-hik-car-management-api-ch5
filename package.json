@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "npx nodemon index",
-    "start": "npx sequelize db:migrate:undo --to 20240505084817-car_add_column_photo.js && node index.js"
+    "start": "npx sequelize db:migrate && node index.js"
   },
   "keywords": [],
   "author": "",
