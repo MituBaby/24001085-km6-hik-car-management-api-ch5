@@ -61,15 +61,15 @@ exports.createPhoto = async (req, res, next) => {
 exports.updatePhoto = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { cars_id } = req.body;
-    if (!cars_id || cars_id <= 0) {
+    const { photo } = req.body;
+    if (!photo || photo <= 0) {
       return next({
-        message: "Cars ID be provided!",
+        message: "Photo must be provided!",
         statusCode: 400,
       });
     }
 
-    const data = await photoUsecase.updatePhoto(id, { cars_id });
+    const data = await photoUsecase.updatePhoto(id, { photo });
 
     res.status(200).json({
       message: "Successs",
