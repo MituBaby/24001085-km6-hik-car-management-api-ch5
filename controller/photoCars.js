@@ -61,7 +61,7 @@ exports.createPhoto = async (req, res, next) => {
 exports.updatePhoto = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { photo } = req.body;
+    const { photo } = req.files;
     if (!photo || photo <= 0) {
       return next({
         message: "Photo must be provided!",
