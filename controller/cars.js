@@ -43,6 +43,7 @@ exports.createCars = async (req, res, next) => {
       transmission,
       description,
      } = req.body;
+     const { photo } = req.files;
     if (!name || name == "") {
       return next({
         message: "Name must be provided!",
@@ -87,6 +88,7 @@ exports.createCars = async (req, res, next) => {
       type,
       transmission,
       description,
+      photo,
     });
 
     res.status(201).json({
@@ -109,6 +111,7 @@ exports.updateCars = async (req, res, next) => {
       transmission,
       description,
      } = req.body;
+     const { photo } = req.files;
     if (!name || name == "") {
       return next({
         message: "Name must be provided!",
@@ -153,6 +156,7 @@ exports.updateCars = async (req, res, next) => {
       type,
       transmission,
       description, 
+      photo,
     });
 
     res.status(200).json({

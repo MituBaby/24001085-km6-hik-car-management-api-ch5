@@ -1,3 +1,6 @@
+const crypto = require("crypto");
+const path = require("path");
+const { uploader } = require("../../helper/cloudinary");
 const { cars, photoCars } = require("../../models");
 
 const { getData, setData, deleteData } = require("../../helper/redis");
@@ -37,6 +40,16 @@ exports.getCar = async (id) => {
 };
 
 exports.createCars = async (payload) => {
+  if (payload.photo) {
+    const { photo } = payload;
+
+    photo.publicId = crypto.randomBytes(16).toString("hex");
+
+    photo.name = `${photo.publicId}${path.parse(photo.name).ext}`;
+
+    const imageUpload = await uploader(photo);
+    payload.photo = imageUpload.secure_url;
+  }
   const data = await cars.create(payload);
 
   const key = `cars:${data.id}`;
@@ -47,6 +60,17 @@ exports.createCars = async (payload) => {
 
 exports.updateCars = async (id, payload) => {
   const key = `cars:${id}`;
+
+  if (payload.photo) {
+    const { photo } = payload;
+
+    photo.publicId = crypto.randomBytes(16).toString("hex");
+
+    photo.name = `${photo.publicId}${path.parse(photo.name).ext}`;
+
+    const imageUpload = await uploader(photo);
+    payload.photo = imageUpload.secure_url;
+  }
 
   await cars.update(payload, {
     where: {
